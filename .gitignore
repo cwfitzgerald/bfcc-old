@@ -1,0 +1,6 @@
+*~
+*.b
+*.bf
+*.brainfuck
+*.o
+bfcc
