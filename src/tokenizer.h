@@ -6,12 +6,13 @@
 using namespace std;
 
 typedef enum {
-	ADD, MV, PRINT, GET, CLR
-} bf_inst;
+	NOP, ADD, MV, PRINT, GET, LBK, RBK, CLR
+} symbol;
 
 typedef struct {
-	char type = 0;
+	symbol type = NOP;
 	int data = 0;
+	int data2 = 0;
 } token;
 
 vector<token> gen_tokens (string program);

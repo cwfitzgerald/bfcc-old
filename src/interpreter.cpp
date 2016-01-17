@@ -18,44 +18,43 @@ bool bf_interpreter(std::vector<token> input) {
 		//cout << endl;
 
 		switch (inst.type) {
-			case '>':
+			case MV:
 				dptr += inst.data;
 				if (dptr >= 30000)
 					dptr -= 30000;
-				break;
-
-			case '<':
-				dptr -= inst.data;
-				if (dptr < 0)
+				else if (dptr < 0)
 					dptr += 30000;
 				break;
 
-			case '+':
+			case ADD:
 				data_array[dptr] += inst.data;
 				break;
 
-			case '-':
-				data_array[dptr] -= inst.data;
-				break;
-
-			case '.':
+			case PRINT:
 				for (int count = 0; count < inst.data; count++)
 					cout << data_array[dptr];
 				break;
 
-			case ',':
+			case GET:
 				for (int count = 0; count < inst.data; count++)
 					cin.get(data_array[dptr]);
 				break;
 
-			case '[':
+			case LBK:
 				if (data_array[dptr] == 0)
 					iptr = inst.data;
 				break;
 
-			case ']':
+			case RBK:
 				if (data_array[dptr] != 0)
 					iptr = inst.data;
+				break;
+				
+			case CLR:
+				data_array[dptr] = 0;
+				break;
+				
+			case NOP:
 				break;
 
 		}

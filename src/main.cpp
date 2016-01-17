@@ -2,7 +2,8 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include <time.h>
+#include <ctime>
+#include <cmath>
 #include "interpreter.h"
 
 using namespace std;
@@ -29,9 +30,11 @@ int main(int argc, char * argv[]) {
 	}
 
 	clock_t t;
-	int time_tokenize, time_compute;
+	int time_tokenize, time_compute, time_load;
 
+	t = clock();
 	string bf_str = load(bf_program);
+	time_load = clock() - t;
 	
 	vector<token> token_list;
 	try {
@@ -50,8 +53,9 @@ int main(int argc, char * argv[]) {
 	t = clock();
 	bf_interpreter (token_list);
 	time_compute = clock() - t;
-		
-	cout << endl << "Tokenizer: " << (float) time_tokenize/CLOCKS_PER_SEC << " sec" << endl;
-	cout << "Interpreter: " << (float) time_compute/CLOCKS_PER_SEC << " sec" << endl;
+
+	cout << endl << endl << "Load: " << ((float) time_load/CLOCKS_PER_SEC)*1000 << " ms" << endl;
+	cout << "Tokenizer: " << ((float) time_tokenize/CLOCKS_PER_SEC)*1000 << " ms" << endl;
+	cout << "Interpreter: " <<  ((float) time_compute/CLOCKS_PER_SEC)*1000 << " ms" << endl;
 	
 }
