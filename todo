@@ -1,0 +1,6 @@
+Optimizer:
+	Using CLR function is slower when using g++ -03
+	CLR function do successive clears
+
+Interpreter:
+	Option for numbered output
