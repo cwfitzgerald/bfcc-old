@@ -30,7 +30,7 @@ int main(int argc, char * argv[]) {
 	}
 
 	clock_t t;
-	int time_tokenize, time_compute, time_load;
+	int time_tokenize, time_optimize, time_compute, time_load;
 
 	t = clock();
 	string bf_str = load(bf_program);
@@ -47,8 +47,11 @@ int main(int argc, char * argv[]) {
 		return 1;
 	}
 
-	//for (auto &i : token_list) 
-		//cout << i.type << ": " << i.data << endl;
+	t = clock();
+	//token_list = optimizer(token_list);
+	time_optimize = clock() - t;
+
+	//print_tokens(token_list);
 
 	t = clock();
 	bf_interpreter (token_list);
@@ -56,6 +59,7 @@ int main(int argc, char * argv[]) {
 
 	cout << endl << endl << "Load: " << ((float) time_load/CLOCKS_PER_SEC)*1000 << " ms" << endl;
 	cout << "Tokenizer: " << ((float) time_tokenize/CLOCKS_PER_SEC)*1000 << " ms" << endl;
+	cout << "Optimizer: " << ((float) time_optimize/CLOCKS_PER_SEC)*1000 << " ms" << endl;
 	cout << "Interpreter: " <<  ((float) time_compute/CLOCKS_PER_SEC)*1000 << " ms" << endl;
 	
 }

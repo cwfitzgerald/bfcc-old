@@ -5,6 +5,25 @@
 
 using namespace std;
 
+void print_tokens(vector<token> list) {
+	for (auto &i : list) {
+		switch (i.type) {
+			case NOP:   cout << "  NOP: "; 			 break;
+			case ADD:   cout << "  ADD: " << i.data; break;
+			case MV:    cout << "   MV: " << i.data; break;
+			case PRINT: cout << "PRINT: " << i.data; break;
+			case GET:   cout << "  GET: " << i.data; break;
+			case LBK:   cout << "  LBK: " << i.data; break;
+			case RBK:   cout << "  RBK: " << i.data; break;
+			case CLR:   cout << "  CLR: ";			 break;
+			case FIND:  cout << " FIND: " << i.data; break;
+			case CP:    cout << "   CP: " << i.data << "\t" << i.data2; break;
+			case MUL:   cout << "  MUL: " << i.data << "\t" << i.data2; break;
+		}
+		cout << endl;
+	}
+}
+
 vector<token> gen_tokens (string program) {
 	vector<token> tokenlist;
 	token tk;
@@ -30,11 +49,11 @@ vector<token> gen_tokens (string program) {
 					throw "error: invalid token ']' at Line " + to_string(linenum) + ", Char: " + to_string(charnum) + "\nNo matching '[' bracket";
 				}
 
-				leftbk = brack_stack.back(); 	//Place of matching bracket
-				brack_stack.pop_back();			//Pop value from stack
+				leftbk = brack_stack.back(); 				//Place of matching bracket
+				brack_stack.pop_back();						//Pop value from stack
 				
-				tk = (token) {RBK, leftbk};		//Add token with redirect.
-				tokenlist[leftbk].data = numtoken;	//Add redirect to matching bracket
+				tk = (token) {RBK, leftbk-numtoken};		//Add token with redirect.
+				tokenlist[leftbk].data = numtoken-leftbk;	//Add redirect to matching bracket
 				tokenlist.push_back(tk);
 				break;
 			}
