@@ -42,7 +42,7 @@ int main(int argc, char * argv[]) {
 		token_list = gen_tokens (bf_str);
 		time_tokenize = clock() - t;
 	}
-	catch (string errstr) {
+	catch (const char * errstr) {
 		cout << errstr << endl;
 		return 1;
 	}
