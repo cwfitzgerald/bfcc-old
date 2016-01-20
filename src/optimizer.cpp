@@ -122,49 +122,73 @@ bool loop_optimize(vector<token> &program, int start, int end) {
 	
 	//Check for a multiply or copy loop: [->>>>+<<+] [->>+>>+] [->+<]
 	//Replace with CP or MUL commands then a CLR
-	sum = 0;
 	bk = false;
 	vector<token> tklist; 
+	int leftcell = 0;
+	int rightcell = 0;
+	int curcell = 0; 
 	for (int i = start+1; i < end && !bk; i++) {
-		if (i == start+1) {
-			if (program[i].type == ADD && program[i].data == -1);
-			else {
-				bk = true;
+		switch (program[i].type) {
+			case MV:
+				curcell += program[i].data;
+				if (leftcell > curcell)
+					leftcell = curcell;
+				if (rightcell < curcell)
+					rightcell = curcell;
 				break;
-			}
+			case ADD:
+				break;
+				
+			default:
+				bk = true;
 		}
-		else {
+	}
+	
+	if (!bk && curcell == 0) {
+		int effects [rightcell-leftcell+1] = {0};
+		int offset = leftcell * -1;
+		int ptr = offset;
+	
+		for (int i = start+1; i < end && !bk; i++) {
 			switch (program[i].type) {
 				case ADD:
-					if (sum) {
-						if (program[i].data == 1) 
-							tklist.push_back((token) {CP, sum, 0});
-						else 
-							tklist.push_back((token) {MUL, sum, program[i].data});
-					}
-					else
-						bk = true;
+					effects[ptr] += program[i].data;
 					break;
 				case MV:
-					sum += program[i].data;
+					ptr += program[i].data;
 					break;
 				default:
 					bk = true;
 					break;
 			}
 		}
-	}
-	
-	if (sum == 0 && !bk) {
-		tklist.push_back((token) {CLR});
-		for (int i = 0; i <= tklist.size(); i++)
-			program[start+i] = tklist[i];
-			
+		
+		ptr = leftcell;
+		for (auto &val : effects) {
+			if (val != 0 && ptr != 0) {
+				if (val == 1) 
+					tklist.push_back((token) {CP, ptr, 0});
+				else
+					tklist.push_back((token) {MUL, ptr, val});
+			}
+			else if (ptr == 0 && val != -1) {
+				bk = true;
+				break; 
+			}
 
-		for (int i = start+tklist.size(); i <= end; i++) 
-			program[i] = (token) {NOP};
-			
-		return true;
+			ptr++;
+		}	
+	
+		if (!bk) {
+			tklist.push_back((token) {CLR});
+			for (int i = 0; i < tklist.size(); i++) 
+				program[start+i] = tklist[i];
+
+			for (int i = start+tklist.size(); i <= end; i++) 
+				program[i] = (token) {NOP};
+		
+			return true;
+		}
 	}
 
 	return false;

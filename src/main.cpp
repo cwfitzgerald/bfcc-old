@@ -48,7 +48,7 @@ int main(int argc, char * argv[]) {
 	}
 
 	t = clock();
-	//token_list = optimizer(token_list);
+	token_list = optimizer(token_list);
 	time_optimize = clock() - t;
 
 	//print_tokens(token_list);
