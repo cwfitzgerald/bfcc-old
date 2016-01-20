@@ -1,4 +1,4 @@
-#include "interpreter.h"
+ #include "interpreter.h"
 #include "vector"
 #include "tuple"
 #include <iostream>
@@ -12,6 +12,13 @@ void wipe(vector<token> &program, int start, int end, token tk) {
 	program[start] = tk;
 
 	for (int i = start+1; i <= end; i++) 
+		program[i] = (token) {NOP};
+}
+void wipe(vector<token> &program, int start, int end, vector<token> tklist) {
+	for (int i = 0; i < tklist.size(); i++) 
+		program[start+i] = tklist[i];
+
+	for (int i = start+tklist.size(); i <= end; i++) 
 		program[i] = (token) {NOP};
 }
 
@@ -181,11 +188,8 @@ bool loop_optimize(vector<token> &program, int start, int end) {
 	
 		if (!bk) {
 			tklist.push_back((token) {CLR});
-			for (int i = 0; i < tklist.size(); i++) 
-				program[start+i] = tklist[i];
 
-			for (int i = start+tklist.size(); i <= end; i++) 
-				program[i] = (token) {NOP};
+			wipe(program, start, end, tklist);
 		
 			return true;
 		}

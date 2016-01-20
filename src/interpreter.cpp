@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int ptr_check(int i) {
+inline int ptr_check(int i) {
 	if (i >= 30000)
 		i -= 30000;
 	else if (i < 0)
@@ -20,11 +20,6 @@ bool bf_interpreter(std::vector<token> &input) {
 	
 	for (int iptr = 0; iptr < input.size(); iptr++) {
 		auto &inst = input[iptr];
-
-		//cout << "inst: " << inst.type << ":" << inst.data << " dptr: " << dptr << " iptr: " << iptr << endl;
-		//for (int i = 0; i < 5; ++i) 
-		//	cout << (int) data_array[i] << " ";
-		//cout << endl;
 
 		switch (inst.type) {
 			case MV:
