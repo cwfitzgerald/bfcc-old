@@ -27,6 +27,7 @@ void print_tokens(vector<token> list) {
 			case FIND:  cout << " FIND: " << i.data << "\t" << i.data2; break;
 			case CP:    cout << "   CP: " << i.data << "\t" << i.data2; break;
 			case MUL:   cout << "  MUL: " << i.data << "\t" << i.data2; break;
+			case FPRNT: cout << "FPRNT: " << i.data << "\t" << i.data2; break;
 		}
 		cout << endl;
 	}
