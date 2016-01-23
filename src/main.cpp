@@ -51,7 +51,7 @@ int main(int argc, char * argv[]) {
 	token_list = optimizer(token_list);
 	time_optimize = clock() - t;
 
-	//print_tokens(token_list);
+	print_tokens(token_list);
 
 	t = clock();
 	bf_interpreter (token_list);

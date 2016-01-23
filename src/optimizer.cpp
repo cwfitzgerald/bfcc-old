@@ -128,6 +128,32 @@ bool loop_optimize(vector<token> &program, int start, int end) {
 		return true;
 	}
 
+	//Check for a print-move command [.>] [.>>>] [.>>]
+	int before = 0;
+	int after = 0;
+	bk = true;
+	if (end-start == 4) 
+		if (program[start+1].type == MV)
+			before = program[start+1].data;
+			if (program[start+2].type == PRINT)
+				if (program[start+3].type == MV) {
+					after = program[start+3].data;
+					bk = false;
+				}
+
+	if (end-start == 3) 
+		if (program[start+1].type == PRINT)
+			if (program[start+2].type == MV) {
+				after = program[start+2].data;
+				bk = false;
+			}
+
+	if (!bk) {
+		wipe(program, start, end, (token) {FPRNT, before, after});
+
+		return true;
+	}
+
 	//Check for a move till empty loop: [>>>>>] [<<<<<] [>>><<]
 	//Replace with FIND command
 	sum = 0;
