@@ -76,8 +76,6 @@ vector<token> optimizer(vector<token> raw) {
 		}
 		if (i.type != NOP && i.type != MV)
 			final.push_back(i);
-
-		//if (i.type != NOP) final.push_back(i);
 	}
 
 	//Rematch brackets

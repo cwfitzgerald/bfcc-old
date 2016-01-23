@@ -101,6 +101,7 @@ int main(int argc, char * argv[]) {
 	time_compute = clock() - t;
 
 	if (verbose >= 1) {
+		cout << endl<< endl;
 		cout << "Compiled Instructions: " << token_list.size() << endl;
 		cout << "Executed Instructions: " << total_loops << endl;
 		cout << "    Executed/Compiled: " << (float) total_loops / token_list.size() << endl;
