@@ -61,6 +61,22 @@ int bf_interpreter(std::vector<token> &input) {
 					dptr = ptr_check(dptr);
 				}
 				break;
+
+			case FPRNT:
+				while (data_array[dptr]) {
+					if (inst.data) {
+						dptr += inst.data;
+						dptr = ptr_check(dptr);
+					}
+					
+					cout << data_array[dptr];
+
+					if (inst.data2) {
+						dptr += inst.data2;
+						dptr = ptr_check(dptr);
+					}
+				}
+				break;
 				
 			case CP: 
 				data_array[ptr_check(dptr+inst.data)] += data_array[dptr];

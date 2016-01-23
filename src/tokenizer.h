@@ -6,7 +6,7 @@
 using namespace std;
 
 typedef enum {
-	NOP, ADD, MV, PRINT, GET, LBK, RBK, CLR, FIND, CP, MUL
+	NOP, ADD, MV, PRINT, FPRNT, GET, LBK, RBK, CLR, FIND, CP, MUL
 } symbol;
 
 typedef struct {
