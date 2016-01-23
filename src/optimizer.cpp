@@ -1,7 +1,9 @@
- #include "interpreter.h"
+#include "interpreter.h"
 #include "vector"
 #include "tuple"
 #include <iostream>
+
+bool loop_optimize(vector<token> &program, int start, int end);
 
 typedef struct {
 	vector<int> effects;
@@ -40,18 +42,42 @@ vector<token> optimizer(vector<token> raw) {
 		it++;
 	}
 
-	//Clear NOPs and ADDs and MVs that do nothing
-	for (auto &i : raw) {
+	//Clear NOPs and ADDs and MVs that do nothing, calculate offset
+	int offset = 0;
+	for (auto i : raw) {
 		switch (i.type) {
 			case NOP:
 				break;
+
 			case ADD:
+				if (i.data)
+					if (offset)
+						i = (token) {ADD, i.data, offset};
+				break;
+
 			case MV:
-				if (!i.data)
-					break;
+				if (i.data){
+					offset += i.data;
+				}
+				break;
+
+			case PRINT:
+			case GET:
+			case CLR:
+				i = token((token) {i.type, i.data, offset});
+				break;
+
 			default:
-				final.push_back(i);
+				if (offset) {
+					final.push_back((token) {MV, offset, 0});
+					offset = 0;
+				}
+
 		}
+		if (i.type != NOP && i.type != MV)
+			final.push_back(i);
+
+		//if (i.type != NOP) final.push_back(i);
 	}
 
 	//Rematch brackets

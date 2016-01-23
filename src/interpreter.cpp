@@ -28,17 +28,17 @@ bool bf_interpreter(std::vector<token> &input) {
 				break;
 
 			case ADD:
-				data_array[dptr] += inst.data;
+				data_array[ptr_check(dptr+inst.data2)] += inst.data;
 				break;
 
 			case PRINT:
 				for (int count = 0; count < inst.data; count++)
-					cout << data_array[dptr];
+					cout << data_array[ptr_check(dptr+inst.data2)];
 				break;
 
 			case GET:
 				for (int count = 0; count < inst.data; count++)
-					cin.get(data_array[dptr]);
+					cin.get(data_array[ptr_check(dptr+inst.data2)]);
 				break;
 
 			case LBK:
@@ -52,7 +52,7 @@ bool bf_interpreter(std::vector<token> &input) {
 				break;
 				
 			case CLR:
-				data_array[dptr] = 0;
+				data_array[ptr_check(dptr+inst.data2)] = 0;
 				break;
 
 			case FIND:

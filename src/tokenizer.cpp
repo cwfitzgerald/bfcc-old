@@ -9,14 +9,14 @@ void print_tokens(vector<token> list) {
 	for (auto &i : list) {
 		switch (i.type) {
 			case NOP:   cout << "  NOP: "; 			 break;
-			case ADD:   cout << "  ADD: " << i.data; break;
-			case MV:    cout << "   MV: " << i.data; break;
-			case PRINT: cout << "PRINT: " << i.data; break;
-			case GET:   cout << "  GET: " << i.data; break;
-			case LBK:   cout << "  LBK: " << i.data; break;
-			case RBK:   cout << "  RBK: " << i.data; break;
-			case CLR:   cout << "  CLR: ";			 break;
-			case FIND:  cout << " FIND: " << i.data; break;
+			case ADD:   cout << "  ADD: " << i.data << "\t" << i.data2; break;
+			case MV:    cout << "   MV: " << i.data << "\t" << i.data2; break;
+			case PRINT: cout << "PRINT: " << i.data << "\t" << i.data2; break;
+			case GET:   cout << "  GET: " << i.data << "\t" << i.data2; break;
+			case LBK:   cout << "  LBK: " << i.data << "\t" << i.data2; break;
+			case RBK:   cout << "  RBK: " << i.data << "\t" << i.data2; break;
+			case CLR:   cout << "  CLR: " << i.data;			 break;
+			case FIND:  cout << " FIND: " << i.data << "\t" << i.data2; break;
 			case CP:    cout << "   CP: " << i.data << "\t" << i.data2; break;
 			case MUL:   cout << "  MUL: " << i.data << "\t" << i.data2; break;
 		}
