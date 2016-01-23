@@ -13,7 +13,7 @@ inline int ptr_check(int i) {
 	return i;
 }
 
-bool bf_interpreter(std::vector<token> &input) {
+int bf_interpreter(std::vector<token> &input) {
 	array<char, 30000> data_array = {};
 	int dptr = 0;
 	unsigned long total_loops = 0;
@@ -77,8 +77,6 @@ bool bf_interpreter(std::vector<token> &input) {
 		}
 		total_loops++;
 	}
-	cout << "Total Instructions: " << total_loops << endl;
 	
-	
-	return true;
+	return total_loops;
 }

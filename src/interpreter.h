@@ -2,6 +2,7 @@
 
 #include "tokenizer.h"
 #include "optimizer.h"
+#include "utility.h"
 #include <vector>
 
-bool bf_interpreter(std::vector<token> &input);
+int bf_interpreter(std::vector<token> &input);
