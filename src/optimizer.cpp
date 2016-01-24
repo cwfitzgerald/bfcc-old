@@ -130,14 +130,20 @@ bool loop_optimize(vector<token> &program, int start, int end) {
 	int before = 0;
 	int after = 0;
 	bk = true;
-	if (end-start == 4) 
-		if (program[start+1].type == MV)
+	if (end-start == 4) {
+		if (program[start+1].type == MV) {
+
 			before = program[start+1].data;
-			if (program[start+2].type == PRINT)
+
+			if (program[start+2].type == PRINT) {
 				if (program[start+3].type == MV) {
+
 					after = program[start+3].data;
 					bk = false;
 				}
+			}
+		}
+	}
 
 	if (end-start == 3) 
 		if (program[start+1].type == PRINT)
