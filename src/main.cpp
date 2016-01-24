@@ -97,7 +97,7 @@ int main(int argc, char * argv[]) {
 		time_tokenize = clock() - t;
 	}
 	catch (const char * errstr) {
-		cout << errstr << endl;
+		cerr << errstr << endl;
 		return 1;
 	}
 
