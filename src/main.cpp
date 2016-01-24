@@ -9,9 +9,12 @@ using namespace std;
 
 int main(int argc, char * argv[]) {
 	char * filename = NULL;
+	char * outfile = NULL;
+
 	bool optimize = true;
+	bool compile = false;
+
 	int verbose = 0;
-	string outfile;
 
 	if (argc == 1) {
 		help(argv[0]);
@@ -27,12 +30,24 @@ int main(int argc, char * argv[]) {
 					filename = argv[i];
 					break;
 
+				//Set outfile (for compilation or interpretation output)
+				case 'o':
+					i++;
+					outfile = argv[i];
+					break;
+
+				//Set to compile to C code instead of interpreting
+				case 'c':
+					compile = true;
+					break;
+
 				//Optimize flags
 				case 'O':
 					if (argv[i][2] == 'n')
 						optimize = false;
 					break;
 
+				//Help flag
 				case 'h':
 				case 'H':
 					help(argv[0]);
@@ -53,7 +68,7 @@ int main(int argc, char * argv[]) {
 				
 			}
 		}
-		else 
+		else if (filename == NULL)
 			filename = argv[i];
 	}
 
@@ -61,9 +76,6 @@ int main(int argc, char * argv[]) {
 		cout << "No specified input file." << endl;
 		return 4;
 	}
-
-
-
 
 	ifstream bf_program (filename);
 	if (!bf_program.is_open()) {
@@ -97,7 +109,11 @@ int main(int argc, char * argv[]) {
 		print_tokens(token_list);
 
 	t = clock();
-	int total_loops = bf_interpreter (token_list);
+	int total_loops = 0;
+	if (compile)
+		bf_ccompiler(token_list, outfile);
+	else 
+		total_loops = bf_interpreter (token_list);
 	time_compute = clock() - t;
 
 	if (verbose >= 1) {
@@ -105,11 +121,11 @@ int main(int argc, char * argv[]) {
 		cout << "Compiled Instructions: " << token_list.size() << endl;
 		cout << "Executed Instructions: " << total_loops << endl;
 		cout << "    Executed/Compiled: " << (float) total_loops / token_list.size() << endl;
-	}
 
-	cout << endl << endl << "Load: " << ((float) time_load/CLOCKS_PER_SEC)*1000 << " ms" << endl;
-	cout << "Tokenizer: " << ((float) time_tokenize/CLOCKS_PER_SEC)*1000 << " ms" << endl;
-	if (optimize) cout << "Optimizer: " << ((float) time_optimize/CLOCKS_PER_SEC)*1000 << " ms" << endl;
-	cout << "Interpreter: " <<  ((float) time_compute/CLOCKS_PER_SEC)*1000 << " ms" << endl;
+		cout << endl << endl << "Load: " << ((float) time_load/CLOCKS_PER_SEC)*1000 << " ms" << endl;
+		cout << "Tokenizer: " << ((float) time_tokenize/CLOCKS_PER_SEC)*1000 << " ms" << endl;
+		if (optimize) cout << "Optimizer: " << ((float) time_optimize/CLOCKS_PER_SEC)*1000 << " ms" << endl;
+		cout << "Interpreter: " <<  ((float) time_compute/CLOCKS_PER_SEC)*1000 << " ms" << endl;
+	}
 	
 }
