@@ -14,22 +14,22 @@ You can just run ```make``` to get an optimized version or ```make debug``` for 
 It will then take any inputs from stdin as data for the program, and will print output on STDOUT.
 
 ###Advanced
-####```-h or -H```
+######```-h or -H```
 Prints help.
 
-####```-i```
+######```-i```
 The argument after the ```-i``` flag marks the file of the program to be read. The ```-i``` flag will always overule a naked filename argument. The last -i flag that is found will be used.
 
-####```-o```
+######```-o```
 If this flag is specified, all program output will be written to a file instead of STDOUT.
 
-####```-On```
+######```-On```
 This turns off the optimizer, making it interpret or compile a raw translation of the original code.
 
-####```-c```
+######```-c```
 This switches from interpreting to compiling. Outputs ANSI C complient code. 
 
-####```-v or -V```
+######```-v or -V```
 Turns on verbose output. With -V1, it prints execution time at the bottom of the program output. With -V2, it prints compiled instruction set before running or compiling the program.
 
 ## Optimizations
