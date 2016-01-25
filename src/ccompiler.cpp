@@ -31,12 +31,17 @@ bool bf_ccompiler(vector<token> input, char * outfile_name) {
 	//Start the compiler//
 	//////////////////////
 
+	//Names for different objects
+	char  darray_name[] = "d";
+	char  pf_name[] = "c";
+	char  p_name[] = "p";
+
 	//Add header
 	out << "#include <stdio.h>" << endl 
 	//Add get char macro (stolen from esotope-bfc)
 	    << "#define GETC() (fflush(stdout), fgetc(stdin))" << endl << endl
 	//Add pointer check function
-		<< "inline int ptr_check(int i) {" << endl
+		<< "inline int "<<pf_name<<"(int i) {" << endl
 		<< "\tif (i >= 30000)" << endl
 		<< "\t\ti -= 30000;" << endl
 		<< "\telse if (i < 0)" << endl
@@ -45,8 +50,8 @@ bool bf_ccompiler(vector<token> input, char * outfile_name) {
 		<< "}" << endl
 	//Start main array
 	    << "int main() {" << endl
-	    << "\tchar  darray[30000] = {0};" << endl
-	    << "\tint   dptr = 0;" << endl
+	    << "\tchar  "<<darray_name<<"[30000] = {0};" << endl
+	    << "\tint   "<<p_name<<" = 0;" << endl
 	    << "\tint tmpptr = 0;" << endl
 	    << "\tint      i = 0;" << endl;
 
@@ -59,21 +64,21 @@ bool bf_ccompiler(vector<token> input, char * outfile_name) {
 			case ADD:
 				INDENT
 				if (inst.data2)
-					out << "darray[ptr_check(dptr+"<<inst.data2<<")] += " << inst.data << ";" << endl;
+					out << darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data2<<")] += " << inst.data << ";" << endl;
 				else
-					out << "darray[dptr] += " << inst.data << ";" << endl;
+					out << darray_name<<"["<<p_name<<"] += "<<inst.data<< ";" << endl;
 				break;
 
 			case MV:
 				INDENT
-				out << "dptr = ptr_check(dptr+" << inst.data << ");" << endl;
+				out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<"+" << inst.data << ");" << endl;
 				break;
 
 			case PRINT:
 				if (inst.data > 1) {
 					if (inst.data2) {
 						INDENT
-						out << "tmpptr = ptr_check(dptr+" << inst.data2 << ");" << endl;
+						out << "tmpptr = "<<pf_name<<"("<<p_name<<"+" << inst.data2 << ");" << endl;
 					}
 
 					INDENT
@@ -82,40 +87,40 @@ bool bf_ccompiler(vector<token> input, char * outfile_name) {
 
 					INDENT
 					if (inst.data2)
-						out << "putchar(darray[tmpptr]);" << endl;
+						out << "putchar("<<darray_name<<"[tmpptr]);" << endl;
 					else 
-						out << "putchar(darray[dptr]);" << endl;
+						out << "putchar("<<darray_name<<"["<<p_name<<"]);" << endl;
 					indent--;
 				}
 				else {
 					INDENT
 					if (inst.data2)
-						out << "putchar(darray[ptr_check(dptr+" << inst.data2 << ")]);" << endl;
+						out << "putchar("<<darray_name<<"["<<pf_name<<"("<<p_name<<"+" << inst.data2 << ")]);" << endl;
 					else 
-						out << "putchar(darray[dptr]);" << endl;
+						out << "putchar("<<darray_name<<"["<<p_name<<"]);" << endl;
 				}
 				break;
 
 			case FPRNT:
 				INDENT
-				out << "while (darray[dptr]) {" << endl;
+				out << "while ("<<darray_name<<"["<<p_name<<"]) {" << endl;
 				indent++;
 
 				if (inst.data) {
 					INDENT 
-					out << "dptr += " << inst.data << ";" << endl;
+					out << ""<<p_name<<" += " << inst.data << ";" << endl;
 					INDENT
-					out << "dptr = ptr_check(dptr);" << endl;
+					out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<");" << endl;
 				}
 
 				INDENT
-				out << "fputc(darray[dptr],stdout);" << endl;
+				out << "fputc("<<darray_name<<"["<<p_name<<"],stdout);" << endl;
 
 				if (inst.data2) {
 					INDENT 
-					out << "dptr += " << inst.data2 << ";" << endl;
+					out << ""<<p_name<<" += " << inst.data2 << ";" << endl;
 					INDENT
-					out << "dptr = ptr_check(dptr);" << endl;
+					out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<");" << endl;
 				}
 
 				indent--;
@@ -125,18 +130,18 @@ bool bf_ccompiler(vector<token> input, char * outfile_name) {
 
 			case FIND:
 				INDENT
-				out << "while (darray[dptr]) " << endl;
+				out << "while ("<<darray_name<<"["<<p_name<<"]) " << endl;
 				indent++;
 
 				INDENT
-				out << "dptr = ptr_check(dptr+" << inst.data << ");" << endl;
+				out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<"+" << inst.data << ");" << endl;
 				indent--;
 				break;
 
 
 			case LBK:
 				INDENT
-				out << "while (darray[dptr]) {" << endl;
+				out << "while ("<<darray_name<<"["<<p_name<<"]) {" << endl;
 				indent++;
 				break;
 
@@ -148,22 +153,22 @@ bool bf_ccompiler(vector<token> input, char * outfile_name) {
 
 			case GET:
 				INDENT
-				out << "darray[ptr_check(dptr+"<<inst.data2<<")] = GETC();" << endl;
+				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data2<<")] = GETC();" << endl;
 				break;
 
 			case CLR:
 				INDENT
-				out << "darray[ptr_check(dptr+"<<inst.data2<<")] = 0;" << endl;
+				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data2<<")] = 0;" << endl;
 				break;
 
 			case MUL:
 				INDENT
-				out << "darray[ptr_check(dptr+"<<inst.data<<")] += darray[dptr] * "<<inst.data2<< ";" << endl;
+				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data<<")] += "<<darray_name<<"["<<p_name<<"] * "<<inst.data2<< ";" << endl;
 				break;
 
 			case CP:
 				INDENT
-				out << "darray[ptr_check(dptr+"<<inst.data<<")] += darray[dptr];" << endl;
+				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data<<")] += "<<darray_name<<"["<<p_name<<"];" << endl;
 				break;
 
 		}
