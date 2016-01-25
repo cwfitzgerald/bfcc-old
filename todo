@@ -1,6 +1,14 @@
 Optimizer:
-	Using CLR function is slower when using g++ -03
+	Compile time execution
 	CLR function do successive clears
 
 Interpreter:
 	Option for numbered output
+
+Error Checking:
+	Check for infinite loop
+	Check for unusable loops after a clear or another loop
+	
+Wrapper:
+	Add bf file concatination
+	Read/Write intermediate language

@@ -16,27 +16,27 @@ string load (ifstream &file) {
 void print_tokens(vector<token> list) {
 	for (auto &i : list) {
 		switch (i.type) {
-			case NOP:   cout << "  NOP: "; 			 break;
-			case ADD:   cout << "  ADD: " << i.data << "\t" << i.data2; break;
-			case MV:    cout << "   MV: " << i.data << "\t" << i.data2; break;
-			case PRINT: cout << "PRINT: " << i.data << "\t" << i.data2; break;
-			case GET:   cout << "  GET: " << i.data << "\t" << i.data2; break;
-			case LBK:   cout << "  LBK: " << i.data << "\t" << i.data2; break;
-			case RBK:   cout << "  RBK: " << i.data << "\t" << i.data2; break;
-			case CLR:   cout << "  CLR: " << i.data2;			 break;
-			case FIND:  cout << " FIND: " << i.data << "\t" << i.data2; break;
-			case CP:    cout << "   CP: " << i.data << "\t" << i.data2; break;
-			case MUL:   cout << "  MUL: " << i.data << "\t" << i.data2; break;
-			case FPRNT: cout << "FPRNT: " << i.data << "\t" << i.data2; break;
+			case NOP:   cerr << "  NOP: "; 			 break;
+			case ADD:   cerr << "  ADD: " << i.data << "\t" << i.data2; break;
+			case MV:    cerr << "   MV: " << i.data << "\t" << i.data2; break;
+			case PRINT: cerr << "PRINT: " << i.data << "\t" << i.data2; break;
+			case GET:   cerr << "  GET: " << i.data << "\t" << i.data2; break;
+			case LBK:   cerr << "  LBK: " << i.data << "\t" << i.data2; break;
+			case RBK:   cerr << "  RBK: " << i.data << "\t" << i.data2; break;
+			case CLR:   cerr << "  CLR: " << i.data2;			 break;
+			case FIND:  cerr << " FIND: " << i.data << "\t" << i.data2; break;
+			case CP:    cerr << "   CP: " << i.data << "\t" << i.data2; break;
+			case MUL:   cerr << "  MUL: " << i.data << "\t" << i.data2; break;
+			case FPRNT: cerr << "FPRNT: " << i.data << "\t" << i.data2; break;
 		}
-		cout << endl;
+		cerr << endl;
 	}
 }
 
 void help(char name[]) {
-	cout << name << " [infile] [-i infile][options]" << endl << endl;
+	cerr << name << " [infile] [-i infile][options]" << endl << endl;
 
-	cout 
+	cerr 
 	<< "Options:" << endl
 	<< "  -h/H" <<  "\t\t\tDisplay this help message" << endl
 	<< "  -i [filename]\t\tSet input file" << endl

@@ -5,5 +5,8 @@
 #include "optimizer.h"
 #include "utility.h"
 #include <vector>
+#include <ostream>
 
-int bf_interpreter(std::vector<token> &input);
+using namespace std;
+
+int bf_interpreter(vector<token>& input, ostream& out);

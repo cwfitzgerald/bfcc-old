@@ -1,5 +1,6 @@
 #include "interpreter.h"
 #include <vector>
+#include <ostream>
 #include <iostream>
 #include <array>
 
@@ -13,7 +14,7 @@ inline int ptr_check(int i) {
 	return i;
 }
 
-int bf_interpreter(std::vector<token> &input) {
+int bf_interpreter(std::vector<token> &input, ostream& out) {
 	array<char, 30000> data_array = {};
 	int dptr = 0;
 	unsigned long total_loops = 0;
@@ -33,7 +34,7 @@ int bf_interpreter(std::vector<token> &input) {
 
 			case PRINT:
 				for (int count = 0; count < inst.data; count++)
-					cout << data_array[ptr_check(dptr+inst.data2)];
+					out << data_array[ptr_check(dptr+inst.data2)];
 				break;
 
 			case GET:

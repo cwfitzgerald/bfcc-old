@@ -3,4 +3,4 @@
 #include <string>
 #include "tokenizer.h"
 
-bool bf_ccompiler(std::vector<token> input, char * outfile_name);
+bool bf_ccompiler(vector<token> input, ostream& out);

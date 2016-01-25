@@ -5,5 +5,8 @@
 *.o
 bfcc
 others/
-*.py
 bf/
+
+dump
+test
+testout.c

@@ -126,7 +126,7 @@ bool loop_optimize(vector<token> &program, int start, int end) {
 		return true;
 	}
 
-	//Check for a print-move command [.>] [.>>>] [.>>]
+	//Check for a print-move command [.>] [.>>>] [>.>>]
 	int before = 0;
 	int after = 0;
 	bk = true;

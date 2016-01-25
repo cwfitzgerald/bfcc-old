@@ -83,6 +83,27 @@ int main(int argc, char * argv[]) {
 		return 3;
 	}
 
+	////////////////////////////
+	//Initialize proper output//
+	////////////////////////////
+
+	streambuf * buf;
+	ofstream ofile;
+
+	//TODO: Add error support
+	if (outfile != NULL) {
+		ofile.open(outfile);
+		buf = ofile.rdbuf();
+	}
+	else 
+		buf = cout.rdbuf();
+
+	ostream out(buf);
+
+	///////////////////////
+	//Run the interpreter//
+	///////////////////////
+
 	clock_t t;
 	int time_tokenize, time_optimize, time_compute, time_load;
 
@@ -111,21 +132,21 @@ int main(int argc, char * argv[]) {
 	t = clock();
 	int total_loops = 0;
 	if (compile)
-		bf_ccompiler(token_list, outfile);
+		bf_ccompiler(token_list, out);
 	else 
-		total_loops = bf_interpreter (token_list);
+		total_loops = bf_interpreter (token_list, out);
 	time_compute = clock() - t;
 
 	if (verbose >= 1) {
-		cout << endl<< endl;
-		cout << "Compiled Instructions: " << token_list.size() << endl;
-		cout << "Executed Instructions: " << total_loops << endl;
-		cout << "    Executed/Compiled: " << (float) total_loops / token_list.size() << endl;
+		cerr << endl<< endl;
+		cerr << "Compiled Instructions: " << token_list.size() << endl;
+		cerr << "Executed Instructions: " << total_loops << endl;
+		cerr << "    Executed/Compiled: " << (float) total_loops / token_list.size() << endl;
 
-		cout << endl << endl << "Load: " << ((float) time_load/CLOCKS_PER_SEC)*1000 << " ms" << endl;
-		cout << "Tokenizer: " << ((float) time_tokenize/CLOCKS_PER_SEC)*1000 << " ms" << endl;
-		if (optimize) cout << "Optimizer: " << ((float) time_optimize/CLOCKS_PER_SEC)*1000 << " ms" << endl;
-		cout << "Interpreter: " <<  ((float) time_compute/CLOCKS_PER_SEC)*1000 << " ms" << endl;
+		cerr << endl << endl << "Load: " << ((float) time_load/CLOCKS_PER_SEC)*1000 << " ms" << endl;
+		cerr << "Tokenizer: " << ((float) time_tokenize/CLOCKS_PER_SEC)*1000 << " ms" << endl;
+		if (optimize) cerr << "Optimizer: " << ((float) time_optimize/CLOCKS_PER_SEC)*1000 << " ms" << endl;
+		cerr << "Interpreter: " <<  ((float) time_compute/CLOCKS_PER_SEC)*1000 << " ms" << endl;
 	}
 	
 }

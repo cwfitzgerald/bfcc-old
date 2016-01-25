@@ -13,20 +13,7 @@ inline void indenter (int num, ostream& o) {
 		o << "\t";
 }
 
-bool bf_ccompiler(vector<token> input, char * outfile_name) {
-	streambuf * buf;
-	ofstream outfile;
-
-	//TODO: Add error support
-	if (outfile_name != NULL) {
-		outfile.open(outfile_name);
-		buf = outfile.rdbuf();
-	}
-	else 
-		buf = cout.rdbuf();
-
-	ostream out(buf);
-
+bool bf_ccompiler(vector<token> input, ostream& out) {
 	//////////////////////
 	//Start the compiler//
 	//////////////////////

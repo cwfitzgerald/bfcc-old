@@ -1,5 +1,5 @@
 WARNINGS = -Wall -Wextra -Wno-sign-compare -Wno-unused-variable -Wno-switch
-STD = -std=c++14
+STD = -std=c++1y
 OPTIMIZE = -O3
 
 CPP_FILES = $(wildcard src/*.cpp)
