@@ -2,7 +2,7 @@
 An optimizing brainfuck interpreter written in C++
 
 ## Compilation
-Before anything, check the makefile to make sure that CXX is set to the proper command for a C++14 compient compiler on your machine.
+Before anything, check the makefile to make sure that CXX is set to the proper command for a C++14 complient compiler on your machine.
 
 You can just run ```make``` to get an optimized version or ```make debug``` for -Og and -g flags on the compiler. This is currently only compatiable with C++14 due to how I initalize structs, so you need clang++ >= 3.4 or g++ >= 5. The compilation will produce the binary bfcc.
 
