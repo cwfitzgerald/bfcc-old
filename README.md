@@ -1,5 +1,5 @@
 # bfcc
-An optimizing brainfuck interpreter written in C++
+An optimizing brainfuck interpreter/C Compiler written in C++
 
 ## Compilation
 Before anything, check the makefile to make sure that CXX is set to the proper command for a C++14 complient compiler on your machine.
