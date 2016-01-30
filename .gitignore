@@ -6,6 +6,7 @@
 bfcc
 others/
 bf/
+util/
 
 *.sublime-project
 *.sublime-workspace
