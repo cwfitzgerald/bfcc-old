@@ -6,6 +6,8 @@
 
 using namespace std;
 
+//Check if data pointer is within bounds
+//if it isn't, then loop back to other side
 inline int ptr_check(int i) {
 	if (i >= 30000)
 		i -= 30000;
@@ -14,11 +16,15 @@ inline int ptr_check(int i) {
 	return i;
 }
 
-int bf_interpreter(std::vector<token> &input, ostream& out) {
-	array<char, 30000> data_array = {};
+int bf_interpreter(vector<token> &input, ostream& out) {
+	//Create data array, and zero it.
+	array<char, 30000> data_array;
+	for (auto &i : data_array)
+		i = 0;
 	int dptr = 0;
 	unsigned long total_loops = 0;
 	
+	//Loop through the instructions
 	for (int iptr = 0; iptr < input.size(); iptr++) {
 		auto &inst = input[iptr];
 

@@ -5,11 +5,14 @@
 
 using namespace std;
 
+//Generate tokens in the form specified in the
+//Intermediate Language Specificiation.
 vector<token> gen_tokens (string program) {
 	vector<token> tokenlist;
 	token tk;
 
 	vector<int> brack_stack;
+	//Current token number, used for bracket matching
 	int numtoken = 0;
 
 	int charnum = 1;
@@ -18,14 +21,19 @@ vector<token> gen_tokens (string program) {
 	for (auto &i : program) {
 		int leftbk;
 		switch(i){
+			//If it's a left bracket, add token
+			//and add to the bracket stack.
 			case '[': {
 				tk = (token) {LBK, 0};
 				brack_stack.push_back(numtoken);
 				tokenlist.push_back(tk);
 				break;
 			}
-				
+			
+			//If it's a right bracket, match up the bracket
+			//with matching left bracket, then add token.
 			case ']': {
+				//If there's unmatched brackets, throw error.
 				if (!brack_stack.size()) {
 					throw "error: invalid token ']' at Line " + to_string(linenum) + ", Char: " + to_string(charnum) + "\nNo matching '[' bracket";
 				}
@@ -38,7 +46,11 @@ vector<token> gen_tokens (string program) {
 				tokenlist.push_back(tk);
 				break;
 			}
-				
+			
+			//Other symbols get combined into a single
+			//token that can have multiple values
+			//ex. ++++>>--
+			//turns into (ADD,4) (MV,2) (ADD,-2)
 			case '+': case '-': case '<': case '>': case ',': case '.': {
 				symbol tt = NOP;
 				int multi = 1;
@@ -75,17 +87,19 @@ vector<token> gen_tokens (string program) {
 				
 				break;  
 			}
-				
+			
+			//Keep track of location in file
 			case '\n': {
 				linenum++;
 				charnum = 1;
-				break;   
-			}                                    
+				break;
+			}     
 		}
 		charnum++;
 		numtoken = tokenlist.size();
 	}
 	
+	//If there's an unmatched bracket, throw an error.
 	if (brack_stack.size()) {
 		throw "error: invalid token '['\nno matching ']' found";
 	}

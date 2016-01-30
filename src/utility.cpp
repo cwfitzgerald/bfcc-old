@@ -4,6 +4,7 @@
 #include <vector>
 #include "tokenizer.h"
 
+//Load a string from a file, including all extra characters
 string load (ifstream &file) {
 	string str;
 	char c;
@@ -13,6 +14,7 @@ string load (ifstream &file) {
 	return str;
 }
 
+//Print token names and data
 void print_tokens(vector<token> list) {
 	for (auto &i : list) {
 		switch (i.type) {
@@ -33,6 +35,7 @@ void print_tokens(vector<token> list) {
 	}
 }
 
+//Help options
 void help(char name[]) {
 	cerr << name << " [infile] [-i infile][options]" << endl << endl;
 

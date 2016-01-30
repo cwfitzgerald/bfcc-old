@@ -4,30 +4,14 @@
 #include <iostream>
 
 bool loop_optimize(vector<token> &program, int start, int end);
+void wipe(vector<token> &program, int start, int end, token tk);
+void wipe(vector<token> &program, int start, int end, vector<token> tklist);
 
-typedef struct {
-	vector<int> effects;
-	int move_sum;
-} loop;
-
-void wipe(vector<token> &program, int start, int end, token tk) {
-	program[start] = tk;
-
-	for (int i = start+1; i <= end; i++) 
-		program[i] = (token) {NOP};
-}
-void wipe(vector<token> &program, int start, int end, vector<token> tklist) {
-	for (int i = 0; i < tklist.size(); i++) 
-		program[start+i] = tklist[i];
-
-	for (int i = start+tklist.size(); i <= end; i++) 
-		program[i] = (token) {NOP};
-}
-
+//Generic Optimizer Handler
 vector<token> optimizer(vector<token> raw) {
 	vector<token> final;
 
-	//Optimize only the most nested loops
+	//Run loop optimizer on the innermost loops
 	int it = 0;
 	symbol last = NOP;
 	for (auto &i : raw) {
@@ -98,6 +82,8 @@ vector<token> optimizer(vector<token> raw) {
 	return final;
 }
 
+//Optimize a loop from start to end, start and end including
+//the brackets. 
 bool loop_optimize(vector<token> &program, int start, int end) {
 
 	//Check for a clear loop (iterates until it reaches 0): [-] [+] [--+] etc.
@@ -255,4 +241,23 @@ bool loop_optimize(vector<token> &program, int start, int end) {
 	}
 
 	return false;
+}
+
+//Wipe an optimized loop by writing the command (or list of command)
+//then fill the rest of the loop with NOP commands, as a later stage
+//will optimize that away.
+//Single Command:
+void wipe(vector<token> &program, int start, int end, token tk) {
+	program[start] = tk;
+
+	for (int i = start+1; i <= end; i++) 
+		program[i] = (token) {NOP};
+}
+//Multiple Commands:
+void wipe(vector<token> &program, int start, int end, vector<token> tklist) {
+	for (int i = 0; i < tklist.size(); i++) 
+		program[start+i] = tklist[i];
+
+	for (int i = start+tklist.size(); i <= end; i++) 
+		program[i] = (token) {NOP};
 }

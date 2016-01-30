@@ -29,7 +29,7 @@ This turns off the optimizer, making it interpret or compile a raw translation o
 #####```-c```
 This switches from interpreting to compiling. Outputs ANSI C complient code. 
 
-#####```-v or -V```
+#####```-v(1/2) or -V(1/2)```
 Turns on verbose output. With -V1, it prints execution time at the bottom of the program output. With -V2, it prints compiled instruction set before running or compiling the program.
 
 ## Optimizations
