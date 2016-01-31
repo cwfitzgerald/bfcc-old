@@ -17,7 +17,7 @@ string load (ifstream &file) {
 }
 
 //Print token names and data
-void print_tokens(vector<token> list) {
+void print_tokens(const vector<token>& list) {
 	for (auto &i : list) {
 		switch (i.type) {
 			case NOP:   cerr << "  NOP: "; 			 break;

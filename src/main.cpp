@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <ctime>
-#include "interpreter.h"
+#include "bfcc.h"
 
 using namespace std;
 

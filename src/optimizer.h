@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tokenizer.h"
 #include <vector>
+#include "token.h"
 
 std::vector<token> optimizer(std::vector<token> raw);

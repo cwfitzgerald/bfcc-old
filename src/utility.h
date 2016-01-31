@@ -4,8 +4,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "tokenizer.h"
+#include "token.h"
 
 std::string load (std::ifstream &file);
-void print_tokens(std::vector<token> list);
+void print_tokens(const std::vector<token>& list);
 void help(char* name);
