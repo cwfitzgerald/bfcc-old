@@ -6,8 +6,6 @@
 #include <vector>
 #include "tokenizer.h"
 
-using namespace std;
-
-string load (ifstream &file);
-void print_tokens(vector<token> list);
+std::string load (std::ifstream &file);
+void print_tokens(std::vector<token> list);
 void help(char* name);

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include "tokenizer.h"
 
-bool bf_ccompiler(vector<token> input, ostream& out);
+bool bf_ccompiler(std::vector<token> input, std::ostream& out);

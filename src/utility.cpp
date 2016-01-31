@@ -4,6 +4,8 @@
 #include <vector>
 #include "tokenizer.h"
 
+using namespace std;
+
 //Load a string from a file, including all extra characters
 string load (ifstream &file) {
 	string str;

@@ -3,8 +3,6 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-
 typedef enum {
 	NOP, ADD, MV, PRINT, FPRNT, GET, LBK, RBK, CLR, FIND, CP, MUL
 } symbol;
@@ -15,5 +13,5 @@ typedef struct {
 	int data2 = 0;
 } token;
 
-vector<token> gen_tokens (string program);
-void print_tokens(vector<token> list);
+std::vector<token> gen_tokens (std::string program);
+void print_tokens(std::vector<token> list);

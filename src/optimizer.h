@@ -3,4 +3,4 @@
 #include "tokenizer.h"
 #include <vector>
 
-vector<token> optimizer(vector<token> raw);
+std::vector<token> optimizer(std::vector<token> raw);

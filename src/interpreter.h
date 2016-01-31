@@ -7,6 +7,5 @@
 #include <vector>
 #include <ostream>
 
-using namespace std;
 
-int bf_interpreter(vector<token>& input, ostream& out);
+int bf_interpreter(std::vector<token>& input, std::ostream& out);

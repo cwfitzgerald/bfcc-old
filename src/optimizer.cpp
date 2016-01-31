@@ -3,6 +3,8 @@
 #include "tuple"
 #include <iostream>
 
+using namespace std;
+
 bool loop_optimize(vector<token> &program, int start, int end);
 void wipe(vector<token> &program, int start, int end, token tk);
 void wipe(vector<token> &program, int start, int end, vector<token> tklist);
