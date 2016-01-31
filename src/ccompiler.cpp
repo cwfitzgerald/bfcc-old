@@ -24,23 +24,23 @@ bool bf_ccompiler(const vector<token>& input, ostream& out) {
 	char  p_name[] = "p";
 
 	//Add header
-	out << "#include <stdio.h>" << endl 
+	out << "#include <stdio.h>" << "\n" 
 	//Add get char macro (stolen from esotope-bfc)
-	    << "#define GETC() (fflush(stdout), fgetc(stdin))" << endl << endl
+	    << "#define GETC() (fflush(stdout), fgetc(stdin))" << "\n" << "\n"
 	//Add pointer check function
-		<< "inline int "<<pf_name<<"(int i) {" << endl
-		<< "\tif (i >= 30000)" << endl
-		<< "\t\ti -= 30000;" << endl
-		<< "\telse if (i < 0)" << endl
-		<< "\t\ti += 30000;" << endl
-		<< "\treturn i;" << endl
-		<< "}" << endl
+		<< "inline int "<<pf_name<<"(int i) {" << "\n"
+		<< "\tif (i >= 30000)" << "\n"
+		<< "\t\ti -= 30000;" << "\n"
+		<< "\telse if (i < 0)" << "\n"
+		<< "\t\ti += 30000;" << "\n"
+		<< "\treturn i;" << "\n"
+		<< "}" << "\n"
 	//Start main array
-	    << "int main() {" << endl
-	    << "\tchar  "<<darray_name<<"[30000] = {0};" << endl
-	    << "\tint   "<<p_name<<" = 0;" << endl
-	    << "\tint tmpptr = 0;" << endl
-	    << "\tint      i = 0;" << endl;
+	    << "int main() {" << "\n"
+	    << "\tchar  "<<darray_name<<"[30000] = {0};" << "\n"
+	    << "\tint   "<<p_name<<" = 0;" << "\n"
+	    << "\tint tmpptr = 0;" << "\n"
+	    << "\tint      i = 0;" << "\n";
 
 	int indent = 1;
 
@@ -51,117 +51,117 @@ bool bf_ccompiler(const vector<token>& input, ostream& out) {
 			case ADD:
 				INDENT
 				if (inst.data2)
-					out << darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data2<<")] += " << inst.data << ";" << endl;
+					out << darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data2<<")] += " << inst.data << ";" << "\n";
 				else
-					out << darray_name<<"["<<p_name<<"] += "<<inst.data<< ";" << endl;
+					out << darray_name<<"["<<p_name<<"] += "<<inst.data<< ";" << "\n";
 				break;
 
 			case MV:
 				INDENT
-				out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<"+" << inst.data << ");" << endl;
+				out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<"+" << inst.data << ");" << "\n";
 				break;
 
 			case PRINT:
 				if (inst.data > 1) {
 					if (inst.data2) {
 						INDENT
-						out << "tmpptr = "<<pf_name<<"("<<p_name<<"+" << inst.data2 << ");" << endl;
+						out << "tmpptr = "<<pf_name<<"("<<p_name<<"+" << inst.data2 << ");" << "\n";
 					}
 
 					INDENT
-					out << "for (i = 0; i < " << inst.data << "; i++)" << endl;
+					out << "for (i = 0; i < " << inst.data << "; i++)" << "\n";
 					indent++;
 
 					INDENT
 					if (inst.data2)
-						out << "putchar("<<darray_name<<"[tmpptr]);" << endl;
+						out << "putchar("<<darray_name<<"[tmpptr]);" << "\n";
 					else 
-						out << "putchar("<<darray_name<<"["<<p_name<<"]);" << endl;
+						out << "putchar("<<darray_name<<"["<<p_name<<"]);" << "\n";
 					indent--;
 				}
 				else {
 					INDENT
 					if (inst.data2)
-						out << "putchar("<<darray_name<<"["<<pf_name<<"("<<p_name<<"+" << inst.data2 << ")]);" << endl;
+						out << "putchar("<<darray_name<<"["<<pf_name<<"("<<p_name<<"+" << inst.data2 << ")]);" << "\n";
 					else 
-						out << "putchar("<<darray_name<<"["<<p_name<<"]);" << endl;
+						out << "putchar("<<darray_name<<"["<<p_name<<"]);" << "\n";
 				}
 				break;
 
 			case FPRNT:
 				INDENT
-				out << "while ("<<darray_name<<"["<<p_name<<"]) {" << endl;
+				out << "while ("<<darray_name<<"["<<p_name<<"]) {" << "\n";
 				indent++;
 
 				if (inst.data) {
 					INDENT 
-					out << ""<<p_name<<" += " << inst.data << ";" << endl;
+					out << ""<<p_name<<" += " << inst.data << ";" << "\n";
 					INDENT
-					out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<");" << endl;
+					out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<");" << "\n";
 				}
 
 				INDENT
-				out << "fputc("<<darray_name<<"["<<p_name<<"],stdout);" << endl;
+				out << "fputc("<<darray_name<<"["<<p_name<<"],stdout);" << "\n";
 
 				if (inst.data2) {
 					INDENT 
-					out << ""<<p_name<<" += " << inst.data2 << ";" << endl;
+					out << ""<<p_name<<" += " << inst.data2 << ";" << "\n";
 					INDENT
-					out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<");" << endl;
+					out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<");" << "\n";
 				}
 
 				indent--;
 				INDENT
-				out << "}" << endl;
+				out << "}" << "\n";
 				break;
 
 			case FIND:
 				INDENT
-				out << "while ("<<darray_name<<"["<<p_name<<"]) " << endl;
+				out << "while ("<<darray_name<<"["<<p_name<<"]) " << "\n";
 				indent++;
 
 				INDENT
-				out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<"+" << inst.data << ");" << endl;
+				out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<"+" << inst.data << ");" << "\n";
 				indent--;
 				break;
 
 
 			case LBK:
 				INDENT
-				out << "while ("<<darray_name<<"["<<p_name<<"]) {" << endl;
+				out << "while ("<<darray_name<<"["<<p_name<<"]) {" << "\n";
 				indent++;
 				break;
 
 			case RBK:
 				indent--;
 				INDENT
-				out << "}" << endl;
+				out << "}" << "\n";
 				break;
 
 			case GET:
 				INDENT
-				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data2<<")] = GETC();" << endl;
+				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data2<<")] = GETC();" << "\n";
 				break;
 
 			case CLR:
 				INDENT
-				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data2<<")] = 0;" << endl;
+				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data2<<")] = 0;" << "\n";
 				break;
 
 			case MUL:
 				INDENT
-				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data<<")] += "<<darray_name<<"["<<p_name<<"] * "<<inst.data2<< ";" << endl;
+				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data<<")] += "<<darray_name<<"["<<p_name<<"] * "<<inst.data2<< ";" << "\n";
 				break;
 
 			case CP:
 				INDENT
-				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data<<")] += "<<darray_name<<"["<<p_name<<"];" << endl;
+				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data<<")] += "<<darray_name<<"["<<p_name<<"];" << "\n";
 				break;
 
 		}
 	}
 
-	out << "\treturn 1;" << endl
+	out << "\treturn 1;" << "\n"
 	    << "}" << endl;
 
 	return true;

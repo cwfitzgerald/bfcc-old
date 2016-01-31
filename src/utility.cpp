@@ -33,22 +33,22 @@ void print_tokens(const vector<token>& list) {
 			case MUL:   cerr << "  MUL: " << i.data << "\t" << i.data2; break;
 			case FPRNT: cerr << "FPRNT: " << i.data << "\t" << i.data2; break;
 		}
-		cerr << endl;
+		cerr << "\n";
 	}
 }
 
 //Help options
 void help(char name[]) {
-	cerr << name << " [infile] [-i infile][options]" << endl << endl;
+	cerr << name << " [infile] [-i infile][options]" << "\n" << "\n";
 
 	cerr 
-	<< "Options:" << endl
-	<< "  -h/H" <<  "\t\t\tDisplay this help message" << endl
-	<< "  -i [filename]\t\tSet input file" << endl
-	<< "  -On"  <<  "\t\t\tTurn off Optimization" << endl
-	<< "  -v/V(0/1/2)  \t\tVerbosity settings " << endl
-	<<            "\t\t\t\t0 = No verbose output" << endl
-	<<            "\t\t\t\t1 = Output instruction/execution counts" << endl
+	<< "Options:" << "\n"
+	<< "  -h/H" <<  "\t\t\tDisplay this help message" << "\n"
+	<< "  -i [filename]\t\tSet input file" << "\n"
+	<< "  -On"  <<  "\t\t\tTurn off Optimization" << "\n"
+	<< "  -v/V(0/1/2)  \t\tVerbosity settings " << "\n"
+	<<            "\t\t\t\t0 = No verbose output" << "\n"
+	<<            "\t\t\t\t1 = Output instruction/execution counts" << "\n"
 	<<            "\t\t\t\t2 = 1 and list all instructions before the program runs" << endl
 	;
 }

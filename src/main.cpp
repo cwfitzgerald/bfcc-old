@@ -138,14 +138,14 @@ int main(int argc, char * argv[]) {
 	time_compute = clock() - t;
 
 	if (verbose >= 1) {
-		cerr << endl<< endl;
-		cerr << "Compiled Instructions: " << token_list.size() << endl;
-		cerr << "Executed Instructions: " << total_loops << endl;
-		cerr << "    Executed/Compiled: " << (float) total_loops / token_list.size() << endl;
+		cerr << "\n"<< "\n";
+		cerr << "Compiled Instructions: " << token_list.size() << "\n";
+		cerr << "Executed Instructions: " << total_loops << "\n";
+		cerr << "    Executed/Compiled: " << (float) total_loops / token_list.size() << "\n";
 
-		cerr << endl << endl << "Load: " << ((float) time_load/CLOCKS_PER_SEC)*1000 << " ms" << endl;
-		cerr << "Tokenizer: " << ((float) time_tokenize/CLOCKS_PER_SEC)*1000 << " ms" << endl;
-		if (optimize) cerr << "Optimizer: " << ((float) time_optimize/CLOCKS_PER_SEC)*1000 << " ms" << endl;
+		cerr << "\n" << "\n" << "Load: " << ((float) time_load/CLOCKS_PER_SEC)*1000 << " ms" << "\n";
+		cerr << "Tokenizer: " << ((float) time_tokenize/CLOCKS_PER_SEC)*1000 << " ms" << "\n";
+		if (optimize) cerr << "Optimizer: " << ((float) time_optimize/CLOCKS_PER_SEC)*1000 << " ms" << "\n";
 		cerr << "Interpreter: " <<  ((float) time_compute/CLOCKS_PER_SEC)*1000 << " ms" << endl;
 	}
 	
