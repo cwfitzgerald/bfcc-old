@@ -5,14 +5,6 @@
 
 using namespace std;
 
-//Don't judge me, I'm lazy with typing the same thing over and over
-#define INDENT indenter(indent, out);
-
-inline void indenter (int num, ostream& o) {
-	for (int i = 0; i < num; i++)
-		o << "\t";
-}
-
 bool bf_ccompiler(const vector<token>& input, ostream& out) {
 	//////////////////////
 	//Start the compiler//
@@ -43,13 +35,14 @@ bool bf_ccompiler(const vector<token>& input, ostream& out) {
 	    << "\tint      i = 0;" << "\n";
 
 	int indent = 1;
+	auto indenter = [&indent, &out](){for (int i = 0; i < indent; i++) out << "\t";};
 
 	for (auto& inst : input) {
 		switch (inst.type) {
 			case NOP: break;
 
 			case ADD:
-				INDENT
+				indenter();
 				if (inst.data2)
 					out << darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data2<<")] += " << inst.data << ";" << "\n";
 				else
@@ -57,22 +50,22 @@ bool bf_ccompiler(const vector<token>& input, ostream& out) {
 				break;
 
 			case MV:
-				INDENT
+				indenter();
 				out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<"+" << inst.data << ");" << "\n";
 				break;
 
 			case PRINT:
 				if (inst.data > 1) {
 					if (inst.data2) {
-						INDENT
+						indenter();
 						out << "tmpptr = "<<pf_name<<"("<<p_name<<"+" << inst.data2 << ");" << "\n";
 					}
 
-					INDENT
+					indenter();
 					out << "for (i = 0; i < " << inst.data << "; i++)" << "\n";
 					indent++;
 
-					INDENT
+					indenter();
 					if (inst.data2)
 						out << "putchar("<<darray_name<<"[tmpptr]);" << "\n";
 					else 
@@ -80,7 +73,7 @@ bool bf_ccompiler(const vector<token>& input, ostream& out) {
 					indent--;
 				}
 				else {
-					INDENT
+					indenter();
 					if (inst.data2)
 						out << "putchar("<<darray_name<<"["<<pf_name<<"("<<p_name<<"+" << inst.data2 << ")]);" << "\n";
 					else 
@@ -89,72 +82,72 @@ bool bf_ccompiler(const vector<token>& input, ostream& out) {
 				break;
 
 			case FPRNT:
-				INDENT
+				indenter();
 				out << "while ("<<darray_name<<"["<<p_name<<"]) {" << "\n";
 				indent++;
 
 				if (inst.data) {
-					INDENT 
+					indenter(); 
 					out << ""<<p_name<<" += " << inst.data << ";" << "\n";
-					INDENT
+					indenter();
 					out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<");" << "\n";
 				}
 
-				INDENT
+				indenter();
 				out << "fputc("<<darray_name<<"["<<p_name<<"],stdout);" << "\n";
 
 				if (inst.data2) {
-					INDENT 
+					indenter(); 
 					out << ""<<p_name<<" += " << inst.data2 << ";" << "\n";
-					INDENT
+					indenter();
 					out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<");" << "\n";
 				}
 
 				indent--;
-				INDENT
+				indenter();
 				out << "}" << "\n";
 				break;
 
 			case FIND:
-				INDENT
+				indenter();
 				out << "while ("<<darray_name<<"["<<p_name<<"]) " << "\n";
 				indent++;
 
-				INDENT
+				indenter();
 				out << ""<<p_name<<" = "<<pf_name<<"("<<p_name<<"+" << inst.data << ");" << "\n";
 				indent--;
 				break;
 
 
 			case LBK:
-				INDENT
+				indenter();
 				out << "while ("<<darray_name<<"["<<p_name<<"]) {" << "\n";
 				indent++;
 				break;
 
 			case RBK:
 				indent--;
-				INDENT
+				indenter();
 				out << "}" << "\n";
 				break;
 
 			case GET:
-				INDENT
+				indenter();
 				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data2<<")] = GETC();" << "\n";
 				break;
 
 			case CLR:
-				INDENT
+				indenter();
 				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data2<<")] = 0;" << "\n";
 				break;
 
 			case MUL:
-				INDENT
+				indenter();
 				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data<<")] += "<<darray_name<<"["<<p_name<<"] * "<<inst.data2<< ";" << "\n";
 				break;
 
 			case CP:
-				INDENT
+				indenter();
 				out << ""<<darray_name<<"["<<pf_name<<"("<<p_name<<"+"<<inst.data<<")] += "<<darray_name<<"["<<p_name<<"];" << "\n";
 				break;
 
