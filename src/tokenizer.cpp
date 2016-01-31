@@ -1,5 +1,5 @@
 #include "tokenizer.h"
-#include <iostream>
+#include <iosfwd>
 #include <vector>
 #include <string>
 

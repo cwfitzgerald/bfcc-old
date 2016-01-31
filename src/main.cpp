@@ -1,4 +1,4 @@
-#include <iostream>
+#include <iosfwd>
 #include <fstream>
 #include <vector>
 #include <string>
