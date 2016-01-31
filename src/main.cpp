@@ -3,7 +3,12 @@
 #include <vector>
 #include <string>
 #include <ctime>
-#include "bfcc.h"
+#include "token.h"
+#include "optimizer.h"
+#include "compiler.h"
+#include "interpreter.h"
+#include "tokenizer.h"
+#include "utility.h"
 
 using namespace std;
 
