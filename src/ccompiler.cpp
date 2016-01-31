@@ -13,7 +13,7 @@ inline void indenter (int num, ostream& o) {
 		o << "\t";
 }
 
-bool bf_ccompiler(vector<token> input, ostream& out) {
+bool bf_ccompiler(const vector<token>& input, ostream& out) {
 	//////////////////////
 	//Start the compiler//
 	//////////////////////
