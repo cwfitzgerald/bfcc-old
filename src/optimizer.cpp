@@ -38,7 +38,7 @@ vector<token> optimizer(vector<token> raw) {
 			case ADD:
 				if (i.data)
 					if (offset)
-						i = (token) {ADD, i.data, offset};
+						i =  {ADD, i.data, offset};
 				break;
 
 			case MV:
@@ -50,12 +50,12 @@ vector<token> optimizer(vector<token> raw) {
 			case PRINT:
 			case GET:
 			case CLR:
-				i = token((token) {i.type, i.data, offset});
+				i = token( {i.type, i.data, offset});
 				break;
 
 			default:
 				if (offset) {
-					final.push_back((token) {MV, offset, 0});
+					final.push_back( {MV, offset, 0});
 					offset = 0;
 				}
 
@@ -109,7 +109,7 @@ bool loop_optimize(vector<token> &program, int start, int end) {
 
 
 	if (sum && !bk) {
-		wipe(program, start, end, (token) {CLR, 0});
+		wipe(program, start, end,  {CLR, 0});
 
 		return true;
 	}
@@ -141,7 +141,7 @@ bool loop_optimize(vector<token> &program, int start, int end) {
 			}
 
 	if (!bk) {
-		wipe(program, start, end, (token) {FPRNT, before, after});
+		wipe(program, start, end,  {FPRNT, before, after});
 
 		return true;
 	}
@@ -166,7 +166,7 @@ bool loop_optimize(vector<token> &program, int start, int end) {
 	}
 
 	if (sum && !bk) {
-		wipe(program, start, end, (token) {FIND, sum});
+		wipe(program, start, end,  {FIND, sum});
 
 		return true;
 	}
@@ -221,9 +221,9 @@ bool loop_optimize(vector<token> &program, int start, int end) {
 		for (auto &val : effects) {
 			if (val != 0 && ptr != 0) {
 				if (val == 1) 
-					tklist.push_back((token) {CP, ptr, 0});
+					tklist.push_back( {CP, ptr, 0});
 				else
-					tklist.push_back((token) {MUL, ptr, val});
+					tklist.push_back( {MUL, ptr, val});
 			}
 			else if (ptr == 0 && val != -1) {
 				bk = true;
@@ -234,7 +234,7 @@ bool loop_optimize(vector<token> &program, int start, int end) {
 		}	
 	
 		if (!bk) {
-			tklist.push_back((token) {CLR});
+			tklist.push_back( {CLR});
 
 			wipe(program, start, end, tklist);
 		
@@ -253,7 +253,7 @@ void wipe(vector<token> &program, int start, int end, token tk) {
 	program[start] = tk;
 
 	for (int i = start+1; i <= end; i++) 
-		program[i] = (token) {NOP};
+		program[i] =  {NOP};
 }
 //Multiple Commands:
 void wipe(vector<token> &program, int start, int end, vector<token> tklist) {
@@ -261,5 +261,5 @@ void wipe(vector<token> &program, int start, int end, vector<token> tklist) {
 		program[start+i] = tklist[i];
 
 	for (int i = start+tklist.size(); i <= end; i++) 
-		program[i] = (token) {NOP};
+		program[i] =  {NOP};
 }

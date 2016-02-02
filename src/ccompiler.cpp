@@ -21,15 +21,11 @@ bool bf_ccompiler(const vector<token>& input, ostream& out) {
 	    << "#define GETC() (fflush(stdout), fgetc(stdin))" << "\n" << "\n"
 	//Add pointer check function
 		<< "inline int "<<pf_name<<"(int i) {" << "\n"
-		<< "\tif (i >= 30000)" << "\n"
-		<< "\t\ti -= 30000;" << "\n"
-		<< "\telse if (i < 0)" << "\n"
-		<< "\t\ti += 30000;" << "\n"
-		<< "\treturn i;" << "\n"
+		<< "\treturn i & 32767;" "\n"
 		<< "}" << "\n"
 	//Start main array
 	    << "int main() {" << "\n"
-	    << "\tchar  "<<darray_name<<"[30000] = {0};" << "\n"
+	    << "\tchar  "<<darray_name<<"[32768] = {0};" << "\n"
 	    << "\tint   "<<p_name<<" = 0;" << "\n"
 	    << "\tint tmpptr = 0;" << "\n"
 	    << "\tint      i = 0;" << "\n";

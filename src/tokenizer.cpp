@@ -24,7 +24,7 @@ vector<token> gen_tokens (string program) {
 			//If it's a left bracket, add token
 			//and add to the bracket stack.
 			case '[': {
-				tk = (token) {LBK, 0};
+				tk =  {LBK, 0};
 				brack_stack.push_back(numtoken);
 				tokenlist.push_back(tk);
 				break;
@@ -41,7 +41,7 @@ vector<token> gen_tokens (string program) {
 				leftbk = brack_stack.back(); 				//Place of matching bracket
 				brack_stack.pop_back();						//Pop value from stack
 				
-				tk = (token) {RBK, leftbk-numtoken};		//Add token with redirect.
+				tk =  {RBK, leftbk-numtoken};		//Add token with redirect.
 				tokenlist[leftbk].data = numtoken-leftbk;	//Add redirect to matching bracket
 				tokenlist.push_back(tk);
 				break;
@@ -83,7 +83,7 @@ vector<token> gen_tokens (string program) {
 						lasttoken.data += multi;
 				}
 				else 
-					tokenlist.push_back((token) {tt, multi});
+					tokenlist.push_back( {tt, multi});
 				
 				break;  
 			}
