@@ -196,7 +196,7 @@ bool loop_optimize(vector<token> &program, int start, int end) {
 	}
 	
 	if (!bk && curcell == 0) {
-		int effects [rightcell-leftcell+1];
+		std::vector<int> effects(rightcell-leftcell+1, 0);
 		int offset = leftcell * -1;
 		int ptr = offset;
 
