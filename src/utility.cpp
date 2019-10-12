@@ -38,7 +38,7 @@ void print_tokens(const vector<token>& list) {
 }
 
 //Help options
-void help(char name[]) {
+void help(char* name) {
 	cerr << name << " [infile] [-i infile][options]" << "\n" << "\n";
 
 	cerr 
